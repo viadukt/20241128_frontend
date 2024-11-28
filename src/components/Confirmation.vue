@@ -1,5 +1,9 @@
 <script>
-
+/**
+ * A component which shows the details of the purchased tickets.
+ *
+ * @component
+ */
 export default {
   data() {
     return {

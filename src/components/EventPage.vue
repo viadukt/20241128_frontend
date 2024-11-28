@@ -1,10 +1,15 @@
 <script>
+/**
+ * A component which shows the details of a chosen event and routes to the Confirmation-component.
+ * It provides a button which triggers REST-calls to reduce the amount of available tickets left in the Event-Table and adds a Booking to the Booking-table.
+ *
+ * @component
+ */
 import {apiService} from "@/services/apiService.js";
 
 export default {
   data() {
     return {
-      events: null,
       id: null,
       name: "",
       date: "",
@@ -12,17 +17,8 @@ export default {
       amountToBuy: null,
     }
   },
-  mounted() {
-    apiService.getEvents()
-        .then(response => (this.events = response.data))
-        .catch(error => console.log(error))
-  },
   methods: {
-    putEventBody() {
-      return {
-        amountToBuy: this.amountToBuy
-      }
-    },
+    // Prepare json for request-body for POST-call to Booking-table.
     postBookingBody() {
       return {
         dateOfPurchase: new Date(),
@@ -31,6 +27,8 @@ export default {
         amountToBuy: this.amountToBuy
       }
     },
+
+    // Route to confirmation-page, reduce amount in Event-tabe, add entry to Booking-table.
     goToConfirmationAndBuy(id, name, date, amountToBuy) {
       this.$router.push('/confirmation/'+ id + '/' + name + '/' + date + '/' + amountToBuy)
       apiService.putEvent(this.id, this.amountToBuy)
@@ -39,6 +37,7 @@ export default {
           .catch(error => console.log(error))
     },
   },
+  // Watch changes in received event-parameters.
   created() {
     this.$watch(
         () => this.$route.params,

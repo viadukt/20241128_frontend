@@ -1,4 +1,10 @@
 <script>
+/**
+ * A component which shows a list of events in the database and routes to the EventPage-component.
+ * It triggers a REST-call to obtain a list of events from the Event-table.
+ *
+ * @component
+ */
 import {apiService} from "@/services/apiService.js";
 
 export default {
@@ -7,11 +13,13 @@ export default {
       events: null,
     }
   },
+  // Get content of Event-table.
   mounted() {
     apiService.getEvents()
         .then(response => (this.events = response.data))
         .catch(error => console.log(error))
   },
+  // Route to selected EventPage.
   methods: {
     routeToDetail(id, name, date, ticketsLeft) {
       this.$router.push('/event/'+ id + "/" + name + "/" + date + "/" + ticketsLeft)
