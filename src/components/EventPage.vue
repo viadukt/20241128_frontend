@@ -31,8 +31,8 @@ export default {
         amountToBuy: this.amountToBuy
       }
     },
-    goToConfirmationAndBuy(id) {
-      this.$router.push('/confirmation/'+ id)
+    goToConfirmationAndBuy(id, name, date, amountToBuy) {
+      this.$router.push('/confirmation/'+ id + '/' + name + '/' + date + '/' + amountToBuy)
       apiService.putEvent(this.id, this.amountToBuy)
           .catch(error => console.log(error))
       apiService.postBooking(this.postBookingBody())
@@ -43,8 +43,8 @@ export default {
     this.$watch(
         () => this.$route.params,
         (newParams, oldParams) => {
-          if (newParams.index !== oldParams.index) {
-            this.id = newParams.index;
+          if (newParams.id !== oldParams.id) {
+            this.id = newParams.id;
             this.name = newParams.name;
             this.date = newParams.date;
             this.ticketsLeft = newParams.ticketsLeft;
@@ -57,13 +57,13 @@ export default {
 </script>
 
 <template>
-  <h3>Event details</h3>
+  <h1>Event details:</h1>
   <p>ID: {{ id }}</p>
   <p>Name: {{ name }}</p>
   <p>Date: {{ date }}</p>
   <p>Tickets left: {{ ticketsLeft }}</p>
 
-  <label for="amountToBuy">Amount to buy:</label>
+  <label for="amountToBuy">Amount to buy: </label>
   <select id="amountToBuy" v-model.number="amountToBuy">
     <option v-if="ticketsLeft > 4">5</option>
     <option v-if="ticketsLeft > 3">4</option>
@@ -72,7 +72,7 @@ export default {
     <option v-if="ticketsLeft > 0">1</option>
   </select>
   <br/>
-  <button class="button" :class ="{ disabledButton: ticketsLeft < 1 }"  @click="goToConfirmationAndBuy(id)">Book Event</button>
+  <button class="button" :class ="{ disabledButton: ticketsLeft < 1 }"  @click="goToConfirmationAndBuy(id, name, date, amountToBuy)">Book Event</button>
 </template>
 
 <style scoped>

@@ -13,8 +13,8 @@ export default {
         .catch(error => console.log(error))
   },
   methods: {
-    routeToDetail(index, name, date, ticketsLeft) {
-      this.$router.push('/event/'+ index + "/" + name + "/" + date + "/" + ticketsLeft)
+    routeToDetail(id, name, date, ticketsLeft) {
+      this.$router.push('/event/'+ id + "/" + name + "/" + date + "/" + ticketsLeft)
     }
   }
 }
@@ -23,9 +23,9 @@ export default {
 <template>
   <h1>Upcoming events:</h1>
   <ul>
-    <li v-for="(event, index) in events" :key="index" @click="routeToDetail(index, event.name, event.date, event.ticketsLeft)">
+    <li v-for="(event, index) in events" :key="index" @click="routeToDetail(event.id, event.name, event.date, event.ticketsLeft)">
       <a>
-        {{ event.name }}
+        {{ event.date + ': ' + event.name }}
       </a>
     </li>
   </ul>

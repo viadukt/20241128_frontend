@@ -1,35 +1,21 @@
 <script>
-import {apiService} from "@/services/apiService.js";
 
 export default {
   data() {
     return {
-      booking: null,
-      id: null
+      id: null,
+      name: null,
+      date: null,
+      amountToBuy: null
     }
   },
-  mounted() {
-      apiService.getBooking(this.id)
-          .then(response => (this.booking = response.data))
-          .catch(error => console.log(error))
-  },
-  created() {
-    this.$watch(
-        () => this.$route.params,
-        (newParams, oldParams) => {
-          if (newParams.id !== oldParams.id) {
-            this.id = newParams.id;
-          }
-        },
-        {deep: true}
-    )
-  }
 }
 </script>
 
 <template>
   <h3>Booking Confirmation</h3>
-  <p>Booking: {{ this.booking }}</p>
+  <p>{{ this.$route.params.amountToBuy + ' Ticket(s) of ' + this.$route.params.name + ' (ID: ' + this.$route.params.id + ') on ' + this.$route.params.date + ' have been purchased.' }}</p>
+
 </template>
 
 <style scoped>
